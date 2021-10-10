@@ -10,7 +10,7 @@ public class WeaponLoader : MonoBehaviour
     private FollowThePath enemyPath;
     public GameObject[] weapons;
     public GameObject[] enemys;
-
+    public WeaponHider hider;
     public void WeaponLoad()
     {
         Vector3 pos = Pole.position;
@@ -22,7 +22,6 @@ public class WeaponLoader : MonoBehaviour
                 if(data.weaponName == w.name)
                 {
                     Instantiate(w, pos, Quaternion.identity);
-                    Debug.Log("true");
                     EnemyMove();
                     EnemySpawner.SetActive(true);
                     Destroy(weaponLoaderButton);
@@ -35,10 +34,14 @@ public class WeaponLoader : MonoBehaviour
     }
     public void EnemyMove()
     {
-        foreach(GameObject e in enemys)
+        if(hider.weaponCount == 0)
         {
-            enemyPath = e.GetComponent<FollowThePath>();
-            enemyPath.moveSpeed = 2f;
+            foreach(GameObject e in enemys)
+            {
+                enemyPath = e.GetComponent<FollowThePath>();
+                enemyPath.moveSpeed = 2f;
+            }
         }
+        
     }
 }
